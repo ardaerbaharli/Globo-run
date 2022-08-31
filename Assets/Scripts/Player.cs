@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private float _leftBorder, _rightBorder;
     private Animator _animator;
     private float _screenWidth;
-    private float _zDir, _xDir, _yDir;
+    public float _zDir, _xDir, _yDir;
     private float _touchStartPositionX;
     private bool _isDragging;
     private float _currentPositionX, _dif, _xMove, _projectedX, _clampedProjected, _moveAmount;
