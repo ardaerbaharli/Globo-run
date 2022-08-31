@@ -9,6 +9,7 @@ TagManager:
   - Jumper
   - ObstacleTrigger
   - Moving
+  - PowerUp
   layers:
   - Default
   - TransparentFX

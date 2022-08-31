@@ -1,33 +1,39 @@
+using System;
 using System.Collections;
 using Enums;
 using Obstacles;
+using PowerUps;
 using UnityEngine;
 using Utilities;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float runningSpeed;
+    [SerializeField] public float defaultRunningSpeed;
     [SerializeField] private float platformWidth;
     [SerializeField] private CameraMovements cameraMovements;
     [SerializeField] private float jumpHeight;
     [SerializeField] private bool cheatingMode;
-    
+
+    [NonSerialized] public float RunningSpeed;
     private float _leftBorder, _rightBorder;
     private Animator _animator;
     private float _screenWidth;
-    public float _zDir, _xDir, _yDir;
+    private float _zDir, _xDir, _yDir;
     private float _touchStartPositionX;
     private bool _isDragging;
     private float _currentPositionX, _dif, _xMove, _projectedX, _clampedProjected, _moveAmount;
     private static readonly int RunningHash = Animator.StringToHash("Running");
     private static readonly int IdleHash = Animator.StringToHash("Idle");
+    private static readonly int FallHash = Animator.StringToHash("Fall");
     private void Idle() => _animator.SetTrigger(IdleHash);
     private void Running() => _animator.SetTrigger(RunningHash);
+    private void Fall() => _animator.SetTrigger(FallHash);
 
     private void Awake()
     {
         _screenWidth = Screen.width;
-        _zDir = runningSpeed;
+        RunningSpeed = defaultRunningSpeed;
+        _zDir = defaultRunningSpeed;
         _leftBorder = -platformWidth / 2;
         _rightBorder = platformWidth / 2;
     }
@@ -44,7 +50,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (GameManager.instance.gameState != GameState.Playing) return;
-        _zDir = runningSpeed;
+        _zDir = RunningSpeed;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -117,6 +123,11 @@ public class Player : MonoBehaviour
             if (cheatingMode) return;
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
             GameManager.instance.LostLife();
+        }
+        else if (other.gameObject.CompareTag("PowerUp"))
+        {
+            var powerUp = other.gameObject.GetComponent<PowerUp>();
+            powerUp.Activate(this);
         }
     }
 }
