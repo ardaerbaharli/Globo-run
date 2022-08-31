@@ -2,7 +2,7 @@ namespace Enums
 {
     public enum Direction
     {
-        LeftToRight,
+        LeftToRight = 0,
         RightToLeft,
         Upwards,
         Downwards

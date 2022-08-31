@@ -1,30 +1,46 @@
-using System;
-using System.Collections.Generic;
+using Enums;
 using Extensions;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Obstacles
 {
     public class TripleMovingGate : ObstacleSetup
     {
-        // [SerializeField] private List<Moving> gates;
-        [SerializeField] private float minDuration;
-        [SerializeField] private float maxDuration;
+        [SerializeField] private bool randomizeInterval;
+
+        [HideIf("randomizeInterval")] [SerializeField]
+        private float interval;
+
+        [ShowIf("randomizeInterval")] [SerializeField]
+        private float minTime;
+
+        [ShowIf("randomizeInterval")] [SerializeField]
+        private float maxTime;
+
+        [SerializeField] private bool randomizeMoveDistance;
+
+        [HideIf("randomizeMoveDistance")] [SerializeField]
+        private float moveDistance;
+
+        [ShowIf("randomizeMoveDistance")] [SerializeField]
+        private float minMoveDistance;
+
+        [ShowIf("randomizeMoveDistance")] [SerializeField]
+        private float maxMoveDistance;
 
         public override void Activate()
         {
-            obstacles.Shuffle();
-
-            var interval = (maxDuration - minDuration) / (obstacles.Count - 1);
-            for (var i = 0; i < obstacles.Count; i++)
+            var i = 0;
+            foreach (var gate in MovingObstacles)
             {
-                var o = (Moving) obstacles[i];
-                o.interval = minDuration + interval * i;
-            }
+                gate.Direction = Direction.Downwards;
+                gate.Interval = randomizeInterval ? Random.Range(minTime, maxTime) : interval;
+                gate.MoveDistance =
+                    randomizeMoveDistance ? Random.Range(minMoveDistance, maxMoveDistance) : moveDistance;
+                i++;
 
-            foreach (var gate in obstacles)
-            {
-                gate.gameObject.SetActive(true);
+                gate.Activate();
             }
         }
     }

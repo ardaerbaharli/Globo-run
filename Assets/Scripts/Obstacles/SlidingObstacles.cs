@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Enums;
 using UnityEngine;
 using static UnityEngine.Random;
@@ -9,7 +7,8 @@ namespace Obstacles
 {
     public class SlidingObstacles : ObstacleSetup
     {
-        // [SerializeField] private List<Moving> obstacles;
+        [SerializeField] private float boxArrivalTime;
+        
         [SerializeField] private float minDistance;
         [SerializeField] private float maxDistance;
         [SerializeField] private float interval;
@@ -18,16 +17,18 @@ namespace Obstacles
 
         public override void Activate()
         {
-            foreach (var o in obstacles)
+            foreach (var m in MovingObstacles)
             {
-                var obstacle = (Moving) o;
                 var isStartingFromLeft = Range(0, 2) == 0;
-                var obstaclePosition = obstacle.transform.position;
-                obstacle.transform.position = new Vector3(isStartingFromLeft ? leftSpawnPoint : rightSpawnPoint,
+                var obstaclePosition = m.transform.position;
+                
+                m.transform.position = new Vector3(isStartingFromLeft ? leftSpawnPoint : rightSpawnPoint,
                     obstaclePosition.y, obstaclePosition.z);
-                obstacle.direction = isStartingFromLeft ? Direction.LeftToRight : Direction.RightToLeft;
+                m.Direction = isStartingFromLeft ? Direction.LeftToRight : Direction.RightToLeft;
+                
                 var distance = Range(minDistance, maxDistance);
-                obstacle.moveDistance = distance;
+                m.MoveDistance = distance;
+                m.Interval = boxArrivalTime;
             }
 
             StartCoroutine(StartSliding());
@@ -35,12 +36,12 @@ namespace Obstacles
 
         private IEnumerator StartSliding()
         {
-            foreach (var obstacle in obstacles)
+            foreach (var m in MovingObstacles)
             {
-                obstacle.gameObject.SetActive(true);
+                m.gameObject.SetActive(true);
+                m.Activate();
                 yield return new WaitForSeconds(interval);
             }
         }
-
     }
 }

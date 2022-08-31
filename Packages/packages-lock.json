@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "69306c2d1eaa9db1fa7e7f02cd8e854f7b6180ea"
     },
+    "com.dbrizov.naughtyattributes": {
+      "version": "2.1.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

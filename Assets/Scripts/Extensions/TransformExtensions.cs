@@ -111,11 +111,13 @@ namespace Extensions
 
                 if (child.childCount > 0)
                 {
-                    return GetChildObjectsWithTag(child, tag);
+                    childObjects.AddRange(GetChildObjectsWithTag(child, tag));
                 }
             }
+
             return childObjects;
         }
+
         public static GameObject GetChildObjectWithTag(this Transform parent, string tag)
         {
             for (var i = 0; i < parent.childCount; i++)
@@ -125,11 +127,13 @@ namespace Extensions
                 {
                     return child.gameObject;
                 }
+
                 if (child.childCount > 0)
                 {
                     return GetChildObjectWithTag(child, tag);
                 }
             }
+
             return null;
         }
     }

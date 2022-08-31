@@ -47,8 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbcda207a64467498786cb93bb64d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasJumper: 1
+  randomizeJumper: 1
+  betweenValues: 0
+  xValues: []
+  withinRange: 1
+  leftBorderX: -6
+  rightBorderX: 6
   height: 0.5
-  obstacles: []
   pooledObject:
     name: 
     gameObject: {fileID: 0}
@@ -252,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582558, guid: 726ea039d4a5645c99142e33852fce12, type: 3}
       propertyPath: m_Name
-      value: Cube
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582558, guid: 726ea039d4a5645c99142e33852fce12, type: 3}
       propertyPath: m_IsActive

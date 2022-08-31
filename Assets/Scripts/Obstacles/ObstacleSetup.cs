@@ -2,32 +2,82 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using NaughtyAttributes;
 using UnityEngine;
-using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Obstacles
 {
     public class ObstacleSetup : MonoBehaviour
     {
-        [SerializeField] private float height;
+        [SerializeField] private bool hasJumper;
 
-        [SerializeField] protected List<Obstacle> obstacles;
+        [ShowIf("hasJumper")] [SerializeField] private bool randomizeJumper;
+
+        [ShowIf("randomizeJumper")] [SerializeField]
+        private bool betweenValues;
+
+        [ShowIf("betweenValues")] [SerializeField]
+        private List<float> xValues;
+
+        [ShowIf("randomizeJumper")] [SerializeField]
+        private bool withinRange;
+
+        [ShowIf("withinRange")] [SerializeField]
+        private float leftBorderX;
+
+        [ShowIf("withinRange")] [SerializeField]
+        private float rightBorderX;
+
+
+        [SerializeField] protected float height;
+        protected List<Obstacle> Obstacles;
+        protected List<Moving> MovingObstacles;
         private List<Collider> _colliders;
         public PooledObject pooledObject;
         public PooledObject plane;
 
+        private GameObject jumper;
+
+        private void Awake()
+        {
+            if (hasJumper)
+                jumper = transform.GetChildObjectWithTag("Jumper");
+
+            var obstacleObjects = transform.GetChildObjectsWithTag("Obstacle");
+            Obstacles = obstacleObjects.Select(x => x.GetComponent<Obstacle>()).ToList();
+
+            var movingObjects = transform.GetChildObjectsWithTag("Moving");
+            MovingObstacles = movingObjects.Select(x => x.GetComponent<Moving>()).ToList();
+
+            _colliders = new List<Collider>();
+            _colliders.AddRange(Obstacles.Select(x => x.GetComponent<Collider>()).ToList());
+            _colliders.AddRange(MovingObstacles.Select(x => x.GetComponent<Collider>()).ToList());
+        }
+
         private void OnEnable()
         {
-            // Find all the child objects with Obstacle tag
-            var s = transform.GetChildObjectsWithTag("Obstacle");
-            obstacles = s.Select(x => x.GetComponent<Obstacle>()).ToList();
-            _colliders = obstacles.Select(x => x.GetComponent<Collider>()).ToList();
+            if (hasJumper && randomizeJumper) SetJumperPosition();
             _colliders.ForEach(x => x.enabled = true);
         }
 
-        public void TakeBackToPool()
+        private void SetJumperPosition()
         {
-            obstacles.ForEach(x => x.ResetPosition());
+            var jPos = jumper.transform.position;
+
+            if (withinRange)
+                jPos.x = Random.Range(leftBorderX, rightBorderX);
+            else if (betweenValues)
+                jPos.x = xValues.RandomElement();
+
+            jumper.transform.position = jPos;
+        }
+
+        public virtual void TakeBackToPool()
+        {
+            foreach (var x in MovingObstacles)
+                x.ResetPosition();
+
             ObjectPool.instance.TakeBack(plane);
             ObjectPool.instance.TakeBack(pooledObject);
         }
@@ -35,7 +85,7 @@ namespace Obstacles
         public void SetPosition(Vector3 pos)
         {
             transform.position = new Vector3(pos.x, height, pos.z);
-            obstacles.ForEach(x => x.SetStartPosition());
+            MovingObstacles.ForEach(x => x.SetStartPosition());
         }
 
         public void DeactivateColliders()
@@ -45,6 +95,7 @@ namespace Obstacles
 
         public virtual void Activate()
         {
+            print(this);
         }
     }
 }

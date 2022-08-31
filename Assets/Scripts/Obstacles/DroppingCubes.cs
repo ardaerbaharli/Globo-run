@@ -1,15 +1,24 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Enums;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Obstacles
 {
     public class DroppingCubes : ObstacleSetup
     {
+        [SerializeField] private float moveDistance;
+        [SerializeField] private float boxArrivalTime;
+        [SerializeField] private bool randomizeFallPositions;
+
+        [ShowIf("randomizeFallPositions")] [SerializeField]
+        private float minFallPositionX;
+
+        [ShowIf("randomizeFallPositions")] [SerializeField]
+        private float maxFallPositionX;
+
         [SerializeField] private float interval;
 
-        [SerializeField] private List<Moving> cubes;
 
         public override void Activate()
         {
@@ -18,11 +27,35 @@ namespace Obstacles
 
         private IEnumerator StartDropping()
         {
-            foreach (var cube in cubes)
+            foreach (var m in MovingObstacles)
             {
-                cube.gameObject.SetActive(true);
+                if (randomizeFallPositions)
+                {
+                    var cPos = m.transform.localPosition;
+                    cPos.x = UnityEngine.Random.Range(minFallPositionX, maxFallPositionX);
+                    m.transform.localPosition = cPos;
+                }
+
+                m.MoveDistance = moveDistance;
+                m.Interval = boxArrivalTime;
+                m.Direction = Direction.Downwards;
+
+                m.gameObject.SetActive(true);
+                m.Activate();
                 yield return new WaitForSeconds(interval);
             }
+        }
+
+        public override void TakeBackToPool()
+        {
+            foreach (var x in MovingObstacles)
+            {
+                x.ResetPosition();
+                x.gameObject.SetActive(false);
+            }
+
+            ObjectPool.instance.TakeBack(plane);
+            ObjectPool.instance.TakeBack(pooledObject);
         }
     }
 }

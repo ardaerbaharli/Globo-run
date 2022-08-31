@@ -2,6 +2,7 @@ using System.Collections;
 using Enums;
 using Obstacles;
 using UnityEngine;
+using Utilities;
 
 public class Player : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float platformWidth;
     [SerializeField] private CameraMovements cameraMovements;
     [SerializeField] private float jumpHeight;
-
+    [SerializeField] private bool cheatingMode;
+    
     private float _leftBorder, _rightBorder;
     private Animator _animator;
     private float _screenWidth;
@@ -110,14 +112,11 @@ public class Player : MonoBehaviour
         {
             ScoreManager.instance.Score++;
         }
-        else if (other.gameObject.CompareTag("Obstacle"))
+        else if (other.gameObject.CompareTag("Obstacle") || other.gameObject.CompareTag("Moving"))
         {
+            if (cheatingMode) return;
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
             GameManager.instance.LostLife();
         }
-        // else if (other.gameObject.CompareTag("ObstacleTrigger"))
-        // {
-        //     other.gameObject.GetComponentInParent<ObstacleSetup>().Activate();
-        // }
     }
 }

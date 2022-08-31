@@ -2982,7 +2982,7 @@ MonoBehaviour:
   highScoreText: {fileID: 1418593390}
   soundToggle: {fileID: 2049860215}
   vibrationToggle: {fileID: 1403922530}
-  scoreRevealTime: 1
+  scoreRevealTime: 2
 --- !u!95 &1786214288
 Animator:
   serializedVersion: 4

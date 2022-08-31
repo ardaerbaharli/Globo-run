@@ -3,45 +3,79 @@ using Enums;
 using UnityEngine;
 using Utilities;
 using static Utilities.iTween;
+using Random = UnityEngine.Random;
 
 namespace Obstacles
 {
-    public class Moving : Obstacle
+    public class Moving : MonoBehaviour
     {
-        [Header("Settings")] public float moveDistance = 650;
-        public float interval = 2f;
-        public Direction direction;
-        public Axis moveAxis;
-        public EaseType easeType;
-        public LoopType loopType;
+        [NonSerialized] public float MoveDistance;
+        [NonSerialized] public float Interval;
+        [NonSerialized] public Direction Direction;
+        [SerializeField] private Axis moveAxis;
+        [SerializeField] private EaseType _easeType;
+        [SerializeField] private LoopType _loopType;
 
         private float _moveDistance;
         private string _moveAxis;
 
-        private void OnEnable()
+        private Vector3 _startPosition;
+
+        public void SetStartPosition()
         {
-            if (direction == Direction.LeftToRight || direction == Direction.Upwards)
-                _moveDistance = Mathf.Abs(moveDistance);
-            else
-                _moveDistance = -Mathf.Abs(moveDistance);
+            _startPosition = transform.localPosition;
+        }
 
-            _moveAxis = moveAxis == Axis.X ? "x" : moveAxis == Axis.Y ? "y" : "z";
+        public void ResetPosition()
+        {
+            transform.localPosition = _startPosition;
+        }
 
+        public void Activate()
+        {
+            _moveDistance = Direction switch
+            {
+                Direction.LeftToRight => Mathf.Abs(MoveDistance),
+                Direction.Upwards => Mathf.Abs(MoveDistance),
+                Direction.RightToLeft => -Mathf.Abs(MoveDistance),
+                Direction.Downwards => -Mathf.Abs(MoveDistance),
+                _ => _moveDistance
+            };
+
+            _moveAxis = moveAxis switch
+            {
+                Axis.X => "x",
+                Axis.Y => "y",
+                _ => "z"
+            };
+            
             MoveBy(gameObject,
-                Hash(_moveAxis, _moveDistance, "easeType", easeType, "loopType", loopType, "time",
-                    interval));
+                Hash(_moveAxis, _moveDistance, "easeType", _easeType, "loopType", _loopType, "time",
+                    Interval));
         }
-        
-        private Vector3 startPosition;
 
-        public override void SetStartPosition()
+        private void Awake()
         {
-            startPosition = transform.localPosition;
+            var renderer = GetComponent<Renderer>();
+            var num = Random.Range(0, 5);
+            renderer.material = Resources.Load<Material>("Materials/" + num);
         }
-        
-        public override void ResetPosition()
+
+
+        private void Start()
         {
-            transform.localPosition = startPosition;
+            GameManager.instance.OnPaused += OnPaused;
+            GameManager.instance.OnResumed += OnResumed;
+        }
+
+        private void OnResumed()
+        {
+            Resume(gameObject);
+        }
+
+        private void OnPaused()
+        {
+            Pause(gameObject);
         }
     }
 }
