@@ -8,31 +8,31 @@ namespace UI
     {
         [SerializeField] private List<GameObject> lives;
         
-        private List<GameObject> activeLives;
-        private List<GameObject> lostLives;
+        private List<GameObject> _activeLives;
+        private List<GameObject> _lostLives;
 
         private void Awake()
         {
-            activeLives = new List<GameObject>();
-            lostLives = new List<GameObject>();
-            activeLives = lives.ToList();
+            _activeLives = new List<GameObject>();
+            _lostLives = new List<GameObject>();
+            _activeLives = lives.ToList();
         }
 
         public void RemoveLife()
         {
             if (lives.Count <= 0) return;
-            var live = activeLives.First();
-            lostLives.Add(live);
-            activeLives.Remove(live);
+            var live = _activeLives.First();
+            _lostLives.Add(live);
+            _activeLives.Remove(live);
             live.SetActive(false);
         }
 
         public void AddLife()
         {
-            if (lostLives.Count <= 0) return;
-            var live = lostLives.First();
-            activeLives.Add(live);
-            lostLives.Remove(live);
+            if (_lostLives.Count <= 0) return;
+            var live = _lostLives.First();
+            _activeLives.Add(live);
+            _lostLives.Remove(live);
             live.SetActive(true);
         }
     }

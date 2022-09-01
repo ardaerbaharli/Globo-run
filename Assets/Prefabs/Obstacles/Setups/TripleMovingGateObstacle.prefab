@@ -105,13 +105,9 @@ MonoBehaviour:
   withinRange: 0
   leftBorderX: -6
   rightBorderX: 6
+  length: 3.5
   height: 2
   pooledObject:
-    name: 
-    gameObject: {fileID: 0}
-    transform: {fileID: 0}
-    poolName: 
-  plane:
     name: 
     gameObject: {fileID: 0}
     transform: {fileID: 0}
@@ -145,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5657344682152766728, guid: e2a8313d5acb049c7a6cddb6376518cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.53
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5657344682152766728, guid: e2a8313d5acb049c7a6cddb6376518cc, type: 3}
       propertyPath: m_LocalRotation.w

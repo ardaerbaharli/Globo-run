@@ -54,24 +54,23 @@ MonoBehaviour:
   withinRange: 0
   leftBorderX: 0
   rightBorderX: 0
+  length: 1
   height: 0
   pooledObject:
     name: 
     gameObject: {fileID: 0}
     transform: {fileID: 0}
     poolName: 
-  plane:
-    name: 
-    gameObject: {fileID: 0}
-    transform: {fileID: 0}
-    poolName: 
   randomizeInterval: 1
+  interval: 0
   minTime: 2
   maxTime: 3
   randomizeDirection: 1
+  directions: 
   leftSpawnX: -4
   rightSpawnX: 4
   randomizeMoveDistance: 1
+  moveDistance: 0
   minMoveDistance: 4
   maxMoveDistance: 8
 --- !u!1 &7876942823530446159

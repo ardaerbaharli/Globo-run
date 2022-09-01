@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Enums;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 
@@ -9,22 +8,22 @@ public class GameManager : MonoBehaviour
 {
     public Action OnGameStarted, OnGameOver, OnPaused, OnResumed;
     public Action OnLifeLost, OnLifeGained;
-    public static GameManager instance;
+    public static GameManager Instance;
     public GameState gameState;
     [SerializeField] private int remainingLives;
 
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
         remainingLives = Config.TotalLives;
     }
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => ObjectPool.instance.isPoolSet);
+        yield return new WaitUntil(() => ObjectPool.Instance.isPoolSet);
 
-        LevelManager.instance.Init();
+        LevelManager.Instance.Init();
     }
 
 

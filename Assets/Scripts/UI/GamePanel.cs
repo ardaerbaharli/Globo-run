@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -18,8 +17,8 @@ namespace UI
 
         private void Start()
         {
-            GameManager.instance.OnLifeGained += _livesManagerUI.AddLife;
-            GameManager.instance.OnLifeLost += _livesManagerUI.RemoveLife;
+            GameManager.Instance.OnLifeGained += _livesManagerUI.AddLife;
+            GameManager.Instance.OnLifeLost += _livesManagerUI.RemoveLife;
             ScoreManager.instance.OnScored += OnScored;
         }
 
@@ -30,7 +29,7 @@ namespace UI
 
         public void Pause()
         {
-            GameManager.instance.PauseGame();
+            GameManager.Instance.PauseGame();
         }
     }
 }

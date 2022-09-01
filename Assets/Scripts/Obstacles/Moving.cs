@@ -1,7 +1,6 @@
 ﻿using System;
 using Enums;
 using UnityEngine;
-using Utilities;
 using static Utilities.iTween;
 using Random = UnityEngine.Random;
 
@@ -13,8 +12,8 @@ namespace Obstacles
         [NonSerialized] public float Interval;
         [NonSerialized] public Direction Direction;
         [SerializeField] private Axis moveAxis;
-        [SerializeField] private EaseType _easeType;
-        [SerializeField] private LoopType _loopType;
+        [SerializeField] private EaseType easeType;
+        [SerializeField] private LoopType loopType;
 
         private float _moveDistance;
         private string _moveAxis;
@@ -50,7 +49,7 @@ namespace Obstacles
             };
             
             MoveBy(gameObject,
-                Hash(_moveAxis, _moveDistance, "easeType", _easeType, "loopType", _loopType, "time",
+                Hash(_moveAxis, _moveDistance, "easeType", easeType, "loopType", loopType, "time",
                     Interval));
         }
 
@@ -64,8 +63,8 @@ namespace Obstacles
 
         private void Start()
         {
-            GameManager.instance.OnPaused += OnPaused;
-            GameManager.instance.OnResumed += OnResumed;
+            GameManager.Instance.OnPaused += OnPaused;
+            GameManager.Instance.OnResumed += OnResumed;
         }
 
         private void OnResumed()

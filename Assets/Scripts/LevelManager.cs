@@ -8,27 +8,28 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Vector3 obstacleStartPoint;
     [SerializeField] private Vector3 planeStartPoint;
     [SerializeField] private int numberOfInitialObstacles;
-    [SerializeField] private int numberOfInitialPlanes;
     [SerializeField] private float planeLength;
 
     private int _obstacleIndex;
     private int _planeIndex;
+    private Vector3 _lastPos;
+    private float _previousLength;
     private List<ObstacleSetup> _obstacles;
-    private List<GameObject> _planes;
-    private ObstacleSetup nextObstacle => _obstacles[ScoreManager.instance.Score];
-    private ObstacleSetup currentObstacle, previousObstacle, prePreviousObstacle;
+    private ObstacleSetup NextObstacle => _obstacles[ScoreManager.instance.Score];
+    private ObstacleSetup _currentObstacle, _previousObstacle, _prePreviousObstacle;
 
-    public static LevelManager instance;
+    private PowerUpSpawner _powerUpSpawner;
+    public static LevelManager Instance;
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
         else
             Destroy(gameObject);
 
+        _powerUpSpawner = GetComponent<PowerUpSpawner>();
         _obstacles = new List<ObstacleSetup>();
-        _planes = new List<GameObject>();
     }
 
     private void Start()
@@ -40,45 +41,59 @@ public class LevelManager : MonoBehaviour
     {
         for (var i = 0; i < numberOfInitialObstacles; i++)
         {
-            LoadObstacle();
+            SpawnObstacle();
         }
 
-        currentObstacle = nextObstacle;
-        currentObstacle.gameObject.SetActive(true);
-        currentObstacle.Activate();
+        _powerUpSpawner.Init();
+
+        _currentObstacle = NextObstacle;
+        _currentObstacle.gameObject.SetActive(true);
+        _currentObstacle.Activate();
     }
 
 
     private void OnScored(int score)
     {
-        prePreviousObstacle = previousObstacle;
-        previousObstacle = currentObstacle;
-        currentObstacle = nextObstacle;
+        _prePreviousObstacle = _previousObstacle;
+        _previousObstacle = _currentObstacle;
+        _currentObstacle = NextObstacle;
 
-        currentObstacle.gameObject.SetActive(true);
-        currentObstacle.Activate();
-        
-        if (prePreviousObstacle is not null)
-            prePreviousObstacle.TakeBackToPool();
+        _currentObstacle.gameObject.SetActive(true);
+        _currentObstacle.Activate();
 
-        LoadObstacle();
+        if (_prePreviousObstacle is not null)
+            _prePreviousObstacle.TakeBackToPool();
+
+        SpawnObstacle();
     }
 
-    private void LoadObstacle()
+    private void SpawnObstacle()
     {
-        var obstaclePooledObject = ObjectPool.instance.GetObstaclePooledObject();
+        var obstaclePooledObject = ObjectPool.Instance.GetObstaclePooledObject();
         var obstacle = obstaclePooledObject.gameObject.GetComponent<ObstacleSetup>();
         obstacle.pooledObject = obstaclePooledObject;
 
-        var plane = ObjectPool.instance.GetPooledObject("Plane");
-        plane.transform.position = planeStartPoint + new Vector3(0, 0, planeLength * _planeIndex);
-        _planeIndex++;
-        _planes.Add(plane.gameObject);
-        obstacle.plane = plane;
-        plane.gameObject.SetActive(true);
 
-        var p = obstacleStartPoint + _obstacleIndex * zDif * Vector3.forward;
-        obstacle.SetPosition(p);
+        var length = obstacle.length;
+        var pos = _lastPos + (length / 2f + _previousLength / 2f + zDif) * Vector3.forward;
+        _previousLength = length;
+        _lastPos = pos;
+        obstacle.SetPosition(pos);
+
+        var planeObj = ObjectPool.Instance.GetPooledObject("Plane");
+        planeObj.transform.position = planeStartPoint + new Vector3(0, 0, planeLength * _planeIndex);
+        var plane = planeObj.gameObject.GetComponent<Plane>();
+        plane.pooledObject = planeObj;
+        _planeIndex++;
+        planeObj.gameObject.SetActive(true);
+
+        // obstacle.plane = planeObj;
+
+        // var planeScale =planeObj.transform.localScale;
+        // planeScale.z
+
+        // var p = obstacleStartPoint + _obstacleIndex * zDif * Vector3.forward;
+        // obstacle.SetPosition(p);
         obstaclePooledObject.gameObject.name = "Level" + (_obstacleIndex + 1);
 
         _obstacles.Add(obstacle);

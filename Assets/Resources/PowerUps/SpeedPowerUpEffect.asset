@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: SpeedPowerUpEffect
   m_EditorClassIdentifier: 
   duration: 4
+  changeMaterial: 0
+  changeColor: 1
+  tileMaterial: {fileID: 0}
+  tileColor: {r: 0.26877165, g: 1, b: 0, a: 1}
   speedBoost: 20

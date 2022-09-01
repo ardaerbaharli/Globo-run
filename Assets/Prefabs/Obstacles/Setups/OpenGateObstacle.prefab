@@ -53,13 +53,9 @@ MonoBehaviour:
   withinRange: 0
   leftBorderX: 0
   rightBorderX: 0
+  length: 1
   height: 1
   pooledObject:
-    name: 
-    gameObject: {fileID: 0}
-    transform: {fileID: 0}
-    poolName: 
-  plane:
     name: 
     gameObject: {fileID: 0}
     transform: {fileID: 0}

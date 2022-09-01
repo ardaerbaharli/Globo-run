@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Dev.ComradeVanti.WaitForAnim;
 using UnityEngine;
 using Utilities;
 
@@ -36,20 +33,20 @@ namespace UI
 
         public void ResumeGame()
         {
-            SoundManager.instance.PlayUiClick();
-            GameManager.instance.ResumeGame();
+            SoundManager.Instance.PlayUiClick();
+            GameManager.Instance.ResumeGame();
         }
 
 
         private void OnSoundToggleValueChanged(bool value)
         {
-            SoundManager.instance.PlayUiClick();
+            SoundManager.Instance.PlayUiClick();
             Config.IsSoundOn = value;
         }
 
         private void OnVibrationToggleValueChanged(bool value)
         {
-            SoundManager.instance.PlayUiClick();
+            SoundManager.Instance.PlayUiClick();
             Config.IsVibrationOn = value;
         }
     }

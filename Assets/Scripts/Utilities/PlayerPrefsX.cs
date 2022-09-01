@@ -10,7 +10,7 @@ namespace Utilities
 
         public static bool GetBool(string name)
         {
-            return PlayerPrefs.GetInt(name) == 1 ? true : false;
+            return PlayerPrefs.GetInt(name) == 1;
         }
 
         public static bool GetBool(string name, bool defaultValue)

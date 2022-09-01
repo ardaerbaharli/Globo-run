@@ -1,5 +1,4 @@
 using Enums;
-using Extensions;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -31,14 +30,12 @@ namespace Obstacles
 
         public override void Activate()
         {
-            var i = 0;
             foreach (var gate in MovingObstacles)
             {
                 gate.Direction = Direction.Downwards;
                 gate.Interval = randomizeInterval ? Random.Range(minTime, maxTime) : interval;
                 gate.MoveDistance =
                     randomizeMoveDistance ? Random.Range(minMoveDistance, maxMoveDistance) : moveDistance;
-                i++;
 
                 gate.Activate();
             }

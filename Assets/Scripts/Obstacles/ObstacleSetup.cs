@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
@@ -30,28 +29,29 @@ namespace Obstacles
         private float rightBorderX;
 
 
+        [SerializeField]public float length;
+        
         [SerializeField] protected float height;
-        protected List<Obstacle> Obstacles;
+        private List<Obstacle> _obstacles;
         protected List<Moving> MovingObstacles;
         private List<Collider> _colliders;
         public PooledObject pooledObject;
-        public PooledObject plane;
-
-        private GameObject jumper;
+        // public PooledObject plane;
+        private GameObject _jumper;
 
         private void Awake()
         {
             if (hasJumper)
-                jumper = transform.GetChildObjectWithTag("Jumper");
+                _jumper = transform.GetChildObjectWithTag("Jumper");
 
             var obstacleObjects = transform.GetChildObjectsWithTag("Obstacle");
-            Obstacles = obstacleObjects.Select(x => x.GetComponent<Obstacle>()).ToList();
+            _obstacles = obstacleObjects.Select(x => x.GetComponent<Obstacle>()).ToList();
 
             var movingObjects = transform.GetChildObjectsWithTag("Moving");
             MovingObstacles = movingObjects.Select(x => x.GetComponent<Moving>()).ToList();
 
             _colliders = new List<Collider>();
-            _colliders.AddRange(Obstacles.Select(x => x.GetComponent<Collider>()).ToList());
+            _colliders.AddRange(_obstacles.Select(x => x.GetComponent<Collider>()).ToList());
             _colliders.AddRange(MovingObstacles.Select(x => x.GetComponent<Collider>()).ToList());
         }
 
@@ -63,14 +63,14 @@ namespace Obstacles
 
         private void SetJumperPosition()
         {
-            var jPos = jumper.transform.position;
+            var jPos = _jumper.transform.position;
 
             if (withinRange)
                 jPos.x = Random.Range(leftBorderX, rightBorderX);
             else if (betweenValues)
                 jPos.x = xValues.RandomElement();
 
-            jumper.transform.position = jPos;
+            _jumper.transform.position = jPos;
         }
 
         public virtual void TakeBackToPool()
@@ -78,8 +78,9 @@ namespace Obstacles
             foreach (var x in MovingObstacles)
                 x.ResetPosition();
 
-            ObjectPool.instance.TakeBack(plane);
-            ObjectPool.instance.TakeBack(pooledObject);
+            
+            // ObjectPool.Instance.TakeBack(plane);
+            ObjectPool.Instance.TakeBack(pooledObject);
         }
 
         public void SetPosition(Vector3 pos)
@@ -95,7 +96,6 @@ namespace Obstacles
 
         public virtual void Activate()
         {
-            print(this);
         }
     }
 }

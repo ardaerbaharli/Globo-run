@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: SlowPowerUpEffect
   m_EditorClassIdentifier: 
   duration: 4
+  changeMaterial: 0
+  changeColor: 1
+  tileMaterial: {fileID: 0}
+  tileColor: {r: 1, g: 0, b: 0, a: 1}
   slowAmount: 10

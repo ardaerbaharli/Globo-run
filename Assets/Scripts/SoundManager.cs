@@ -7,14 +7,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private AudioSource uiClick;
 
-
-    public static SoundManager instance;
+    public static SoundManager Instance;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else

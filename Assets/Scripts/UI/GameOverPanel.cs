@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -13,7 +12,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI highScoreText;
         [SerializeField] private ToggleSwitch soundToggle, vibrationToggle;
 
-        [SerializeField] private float scoreRevealTime;
+        private float _scoreRevealTime = 1f;
+
         private void OnEnable()
         {
             StartCoroutine(ScoreAnimation());
@@ -29,8 +29,10 @@ namespace UI
         private IEnumerator ScoreAnimation()
         {
             var score = ScoreManager.instance.Score;
+            _scoreRevealTime += score % 50;
+            
             var s = 0;
-            var interval = scoreRevealTime / score;
+            var interval = _scoreRevealTime / score;
             while (score - s != -1)
             {
                 scoreText.text = $"score: {s}";
@@ -41,19 +43,19 @@ namespace UI
 
         public void RestartButton()
         {
-            SoundManager.instance.PlayUiClick();
+            SoundManager.Instance.PlayUiClick();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         private void OnSoundToggleValueChanged(bool value)
         {
-            SoundManager.instance.PlayUiClick();
+            SoundManager.Instance.PlayUiClick();
             Config.IsSoundOn = value;
         }
 
         private void OnVibrationToggleValueChanged(bool value)
         {
-            SoundManager.instance.PlayUiClick();
+            SoundManager.Instance.PlayUiClick();
             Config.IsVibrationOn = value;
         }
     }

@@ -32,7 +32,7 @@ namespace Obstacles
                 if (randomizeFallPositions)
                 {
                     var cPos = m.transform.localPosition;
-                    cPos.x = UnityEngine.Random.Range(minFallPositionX, maxFallPositionX);
+                    cPos.x = Random.Range(minFallPositionX, maxFallPositionX);
                     m.transform.localPosition = cPos;
                 }
 
@@ -54,8 +54,7 @@ namespace Obstacles
                 x.gameObject.SetActive(false);
             }
 
-            ObjectPool.instance.TakeBack(plane);
-            ObjectPool.instance.TakeBack(pooledObject);
+            ObjectPool.Instance.TakeBack(pooledObject);
         }
     }
 }

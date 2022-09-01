@@ -6,7 +6,7 @@ namespace UI
     {
         public void StartGame()
         {
-            GameManager.instance.StartGame();
+            GameManager.Instance.StartGame();
         }
     
     }

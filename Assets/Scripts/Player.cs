@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraMovements cameraMovements;
     [SerializeField] private float jumpHeight;
     [SerializeField] private bool cheatingMode;
+    [SerializeField] private float rollbackSpeed;
+    [SerializeField] public float maxSpeed;
+    [SerializeField] public float minSpeed;
 
     [NonSerialized] public float RunningSpeed;
     private float _leftBorder, _rightBorder;
@@ -25,6 +28,7 @@ public class Player : MonoBehaviour
     private static readonly int RunningHash = Animator.StringToHash("Running");
     private static readonly int IdleHash = Animator.StringToHash("Idle");
     private static readonly int FallHash = Animator.StringToHash("Fall");
+
     private void Idle() => _animator.SetTrigger(IdleHash);
     private void Running() => _animator.SetTrigger(RunningHash);
     private void Fall() => _animator.SetTrigger(FallHash);
@@ -41,17 +45,19 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        GameManager.instance.OnGameStarted += Running;
-        GameManager.instance.OnPaused += Idle;
-        GameManager.instance.OnResumed += Running;
-        GameManager.instance.OnGameOver += Idle;
+        GameManager.Instance.OnGameStarted += Running;
+        GameManager.Instance.OnPaused += Idle;
+        GameManager.Instance.OnResumed += Running;
+        GameManager.Instance.OnGameOver += Idle;
     }
 
     private void Update()
     {
-        if (GameManager.instance.gameState != GameState.Playing) return;
-        _zDir = RunningSpeed;
+        if (GameManager.Instance.gameState != GameState.Playing) return;
 
+        RunningSpeed = Mathf.Lerp(RunningSpeed, defaultRunningSpeed, Time.deltaTime * rollbackSpeed);
+
+        _zDir = RunningSpeed;
         if (Input.GetMouseButtonDown(0))
         {
             if (Helpers.IsCursorOverUI()) return;
@@ -122,12 +128,16 @@ public class Player : MonoBehaviour
         {
             if (cheatingMode) return;
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
-            GameManager.instance.LostLife();
+            GameManager.Instance.LostLife();
         }
         else if (other.gameObject.CompareTag("PowerUp"))
         {
-            var powerUp = other.gameObject.GetComponent<PowerUp>();
-            powerUp.Activate(this);
+            print("PowerUp trigger");
+            other.gameObject.GetComponent<PowerUp>().Activate(this);
+        }
+        else if (other.gameObject.CompareTag("Missed"))
+        {
+            other.gameObject.GetComponentInParent<PowerUp>().Missed();
         }
     }
 }

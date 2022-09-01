@@ -1,11 +1,9 @@
-using TMPro;
 using UnityEngine;
 using Utilities;
 
 public class ScoreManager : MonoBehaviour
 {
     public delegate void OnScoredDelegate(int score);
-
     public event OnScoredDelegate OnScored;
     private int score;
 

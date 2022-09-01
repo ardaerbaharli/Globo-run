@@ -25,10 +25,10 @@ public class PooledObject
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool instance;
+    public static ObjectPool Instance;
     public List<ObjectToPool> objectToPool;
-    public Queue<PooledObject> pooledObjectsQ;
-    public Dictionary<string, Queue<PooledObject>> poolDictionary;
+    public Queue<PooledObject> PooledObjectsQ;
+    public Dictionary<string, Queue<PooledObject>> PoolDictionary;
 
     public bool isPoolSet;
     public Transform parent;
@@ -45,34 +45,25 @@ public class ObjectPool : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
         StartPool();
-    }
-
-    private void OnGameOver()
-    {
-        // set active false every child of parent
-        foreach (Transform child in parent.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
     }
 
     private void StartPool()
     {
         if (parent == null) parent = transform;
 
-        poolDictionary = new Dictionary<string, Queue<PooledObject>>();
+        PoolDictionary = new Dictionary<string, Queue<PooledObject>>();
         foreach (var item in objectToPool)
         {
-            pooledObjectsQ = new Queue<PooledObject>();
+            PooledObjectsQ = new Queue<PooledObject>();
             for (var i = 0; i < item.amount; i++)
             {
                 var obj = Instantiate(item.gameObject, parent.transform);
 
                 obj.SetActive(false);
 
-                pooledObjectsQ.Enqueue(new PooledObject()
+                PooledObjectsQ.Enqueue(new PooledObject()
                 {
                     name = item.name,
                     gameObject = obj,
@@ -81,7 +72,7 @@ public class ObjectPool : MonoBehaviour
                 });
             }
 
-            poolDictionary.Add(item.name, pooledObjectsQ);
+            PoolDictionary.Add(item.name, PooledObjectsQ);
         }
 
         isPoolSet = true;
@@ -90,18 +81,18 @@ public class ObjectPool : MonoBehaviour
 
     public PooledObject GetPooledObject(string objectName, bool setActive = false)
     {
-        if (!poolDictionary.ContainsKey(objectName))
+        if (!PoolDictionary.ContainsKey(objectName))
         {
             return null;
         }
 
-        var obj = poolDictionary[objectName].Dequeue();
+        var obj = PoolDictionary[objectName].Dequeue();
         if (obj.gameObject.activeSelf)
             return GetPooledObject(objectName);
 
         var prefabRotation = objectToPool.First(x => x.name == objectName).gameObject.transform.rotation;
         obj.transform.rotation = prefabRotation;
-
+        obj.transform.localScale = objectToPool.First(x => x.name == objectName).gameObject.transform.localScale;
         obj.gameObject.SetActive(setActive);
         return obj;
     }
@@ -120,6 +111,6 @@ public class ObjectPool : MonoBehaviour
 
         obj.gameObject.SetActive(false);
         var objectName = obj.name;
-        poolDictionary[objectName].Enqueue(obj);
+        PoolDictionary[objectName].Enqueue(obj);
     }
 }

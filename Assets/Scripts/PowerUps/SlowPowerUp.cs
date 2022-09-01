@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PowerUps
 {
-    public class SlowPowerUp : PowerUp
+    public class SlowPowerUp : MonoBehaviour
     {
         private SlowPowerUpEffect effect;
 
@@ -13,7 +13,7 @@ namespace PowerUps
             effect = Resources.Load<SlowPowerUpEffect>("PowerUps/SlowPowerUpEffect");
         }
 
-        public override void Activate(Player player)
+        public  void Activate(Player player)
         {
             StartCoroutine(Using(player));
         }
@@ -36,7 +36,7 @@ namespace PowerUps
         }
 
 
-        public override void Deactivate(Player player)
+        public  void Deactivate(Player player)
         {
             player.RunningSpeed = player.defaultRunningSpeed;
         }
