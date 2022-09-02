@@ -3,7 +3,8 @@ using PlayerPrefs = UnityEngine.PlayerPrefs;
 namespace Utilities
 {
     public class PlayerPrefsX
-    {    public static void SetBool(string name, bool booleanValue)
+    {
+        public static void SetBool(string name, bool booleanValue)
         {
             PlayerPrefs.SetInt(name, booleanValue ? 1 : 0);
         }
@@ -19,6 +20,7 @@ namespace Utilities
             {
                 return GetBool(name);
             }
+
             SetBool(name, defaultValue);
             return defaultValue;
         }
