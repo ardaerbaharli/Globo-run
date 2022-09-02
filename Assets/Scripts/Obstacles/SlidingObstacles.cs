@@ -8,7 +8,7 @@ namespace Obstacles
     public class SlidingObstacles : ObstacleSetup
     {
         [SerializeField] private float boxArrivalTime;
-        
+
         [SerializeField] private float minDistance;
         [SerializeField] private float maxDistance;
         [SerializeField] private float interval;
@@ -21,11 +21,11 @@ namespace Obstacles
             {
                 var isStartingFromLeft = Range(0, 2) == 0;
                 var obstaclePosition = m.transform.position;
-                
+
                 m.transform.position = new Vector3(isStartingFromLeft ? leftSpawnPoint : rightSpawnPoint,
                     obstaclePosition.y, obstaclePosition.z);
                 m.Direction = isStartingFromLeft ? Direction.LeftToRight : Direction.RightToLeft;
-                
+
                 var distance = Range(minDistance, maxDistance);
                 m.MoveDistance = distance;
                 m.Interval = boxArrivalTime;

@@ -7,7 +7,7 @@ namespace UI
     public class LivesManagerUI : MonoBehaviour
     {
         [SerializeField] private List<GameObject> lives;
-        
+
         private List<GameObject> _activeLives;
         private List<GameObject> _lostLives;
 

@@ -13,7 +13,7 @@ namespace Extensions
         {
             return !string.IsNullOrEmpty(value) && !string.IsNullOrWhiteSpace(value);
         }
-        
+
         public static bool IsNullOrWhiteSpace(this string value)
         {
             return string.IsNullOrWhiteSpace(value);
@@ -46,6 +46,5 @@ namespace Extensions
             var trCharList = "ğüşıöçĞÜŞİÖÇ".ToList();
             return target.Any(trCharList.Contains);
         }
-
     }
 }

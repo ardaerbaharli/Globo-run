@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 138635881988229557}
   - component: {fileID: 1029463160209455977}
   m_Layer: 0
-  m_Name: ScoreTrigger
-  m_TagString: ScoreTrigger
+  m_Name: ObstaclePassed
+  m_TagString: ObstaclePassed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

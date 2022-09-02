@@ -11,6 +11,11 @@ namespace Extensions
                 UnityEngine.Object.Destroy(child);
         }
 
+        public static T GetComponentInSibling<T>(this GameObject go) //, out T component) where T : Component
+        {
+            return go.transform.parent.GetComponentInChildren<T>();
+        }
+
         public static IEnumerable<GameObject> GetChildrenOnly(this GameObject go)
         {
             if (go != null)

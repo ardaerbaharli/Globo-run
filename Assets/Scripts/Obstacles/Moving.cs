@@ -1,5 +1,6 @@
 ﻿using System;
 using Enums;
+using Managers;
 using UnityEngine;
 using static Utilities.iTween;
 using Random = UnityEngine.Random;
@@ -47,7 +48,7 @@ namespace Obstacles
                 Axis.Y => "y",
                 _ => "z"
             };
-            
+
             MoveBy(gameObject,
                 Hash(_moveAxis, _moveDistance, "easeType", easeType, "loopType", loopType, "time",
                     Interval));

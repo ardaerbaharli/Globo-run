@@ -29,7 +29,7 @@ namespace Extensions
             var enumerable = Enum.GetValues(value.GetType()).Cast<Enum>().ToArray();
             return enumerable.ElementAt(new Random().Next(0, enumerable.Length));
         }
-        
+
         public static Enum GetRandom(this IEnumerable<Enum> value)
         {
             var enumerable = Enum.GetValues(value.GetType()).Cast<Enum>().ToArray();

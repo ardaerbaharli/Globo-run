@@ -59,14 +59,10 @@ MonoBehaviour:
   withinRange: 0
   leftBorderX: 0
   rightBorderX: 0
+  scoreValue: 0
   length: 55
   height: 1
   pooledObject:
-    name: 
-    gameObject: {fileID: 0}
-    transform: {fileID: 0}
-    poolName: 
-  plane:
     name: 
     gameObject: {fileID: 0}
     transform: {fileID: 0}
@@ -86,7 +82,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -156,7 +152,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -226,7 +222,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -340,7 +336,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
       propertyPath: m_Name
-      value: ScoreTrigger
+      value: ObstaclePassed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
+      propertyPath: m_TagString
+      value: ObstaclePassed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
@@ -358,7 +358,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -428,7 +428,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -498,7 +498,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder
@@ -572,7 +572,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: easeType
-      value: 7
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6298328502495582555, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: m_RootOrder

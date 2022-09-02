@@ -1,3 +1,4 @@
+using Managers;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI scoreText;
 
         private LivesManagerUI _livesManagerUI;
-        
+
 
         private void Awake()
         {

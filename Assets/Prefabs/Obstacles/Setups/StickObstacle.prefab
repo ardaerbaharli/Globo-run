@@ -54,6 +54,7 @@ MonoBehaviour:
   withinRange: 1
   leftBorderX: -6
   rightBorderX: 6
+  scoreValue: 0
   length: 2.5
   height: 0.5
   pooledObject:
@@ -114,7 +115,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
       propertyPath: m_Name
-      value: ScoreTrigger
+      value: ObstaclePassed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
+      propertyPath: m_TagString
+      value: ObstaclePassed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}

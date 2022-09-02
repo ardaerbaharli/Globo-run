@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,7 +17,7 @@ namespace UI
 
         private void OnEnable()
         {
-            StartCoroutine(ScoreAnimation());
+            // StartCoroutine(ScoreAnimationCoroutine());
             highScoreText.text = $"top score: {ScoreManager.instance.HighScore}";
 
             soundToggle.Toggle(Config.IsSoundOn);
@@ -26,18 +27,24 @@ namespace UI
             vibrationToggle.OnValueChanged += OnVibrationToggleValueChanged;
         }
 
-        private IEnumerator ScoreAnimation()
+        public void ScoreAnimation()
         {
-            var score = ScoreManager.instance.Score;
-            _scoreRevealTime += score % 50;
-            
-            var s = 0;
-            var interval = _scoreRevealTime / score;
-            while (score - s != -1)
+            StartCoroutine(ScoreAnimationCoroutine());
+        }
+
+        private IEnumerator ScoreAnimationCoroutine()
+        {
+            var s = ScoreManager.instance.GameOverScore;
+            _scoreRevealTime += s / 1000f;
+            float score;
+            var delta = score = 0f;
+
+            while (delta < _scoreRevealTime)
             {
-                scoreText.text = $"score: {s}";
-                s++;
-                yield return new WaitForSeconds(interval);
+                delta += Time.deltaTime;
+                scoreText.text = $"score: {score:0.}";
+                score = Mathf.Lerp(score, s, delta / _scoreRevealTime);
+                yield return null;
             }
         }
 

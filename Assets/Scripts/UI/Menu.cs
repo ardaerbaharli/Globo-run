@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 
 namespace UI
@@ -8,6 +9,5 @@ namespace UI
         {
             GameManager.Instance.StartGame();
         }
-    
     }
 }

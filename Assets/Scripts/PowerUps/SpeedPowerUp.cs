@@ -12,7 +12,7 @@ namespace PowerUps
             _effect = Resources.Load<SpeedPowerUpEffect>("PowerUps/SpeedPowerUpEffect");
         }
 
-        public  void Activate(Player player)
+        public void Activate(Player player)
         {
             StartCoroutine(Using(player));
         }
@@ -21,18 +21,19 @@ namespace PowerUps
         {
             var t = 0.0f;
             while (t < _effect.duration)
-            {                                           
+            {
                 t += Time.deltaTime;
-                player.RunningSpeed = Mathf.Sin(t * Mathf.PI / _effect.duration) * _effect.speedBoost + player.defaultRunningSpeed;
+                player.RunningSpeed = Mathf.Sin(t * Mathf.PI / _effect.duration) * _effect.speedBoost +
+                                      player.defaultRunningSpeed;
                 yield return null;
             }
-            
+
             yield return new WaitForSeconds(_effect.duration);
             Deactivate(player);
         }
 
 
-        public  void Deactivate(Player player)
+        public void Deactivate(Player player)
         {
             player.RunningSpeed = player.defaultRunningSpeed;
         }

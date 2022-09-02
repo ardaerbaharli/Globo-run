@@ -13,7 +13,7 @@ namespace PowerUps
             effect = Resources.Load<SlowPowerUpEffect>("PowerUps/SlowPowerUpEffect");
         }
 
-        public  void Activate(Player player)
+        public void Activate(Player player)
         {
             StartCoroutine(Using(player));
         }
@@ -36,7 +36,7 @@ namespace PowerUps
         }
 
 
-        public  void Deactivate(Player player)
+        public void Deactivate(Player player)
         {
             player.RunningSpeed = player.defaultRunningSpeed;
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using Cinemachine;
+using Managers;
 using UnityEngine;
 
 public class CameraMovements : MonoBehaviour

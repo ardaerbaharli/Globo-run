@@ -60,6 +60,7 @@ MonoBehaviour:
   withinRange: 0
   leftBorderX: 0
   rightBorderX: 0
+  scoreValue: 0
   length: 4.5
   height: 0
   pooledObject:
@@ -86,6 +87,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9049553280905209483}
     m_Modifications:
+    - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
+      propertyPath: loopType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: moveAxis
       value: 1
@@ -366,7 +371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
       propertyPath: m_Name
-      value: ScoreTrigger
+      value: ObstaclePassed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367430992550105571, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
+      propertyPath: m_TagString
+      value: ObstaclePassed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e792e09b14994291a3e2926d3720f4f, type: 3}
@@ -546,6 +555,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9049553280905209483}
     m_Modifications:
+    - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
+      propertyPath: loopType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: moveAxis
       value: 1

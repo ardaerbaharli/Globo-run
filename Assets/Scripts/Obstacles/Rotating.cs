@@ -28,6 +28,5 @@ namespace Obstacles
                 Hash(_axis, _rotateDirection, "time", interval, "looptype", loopType, "easetype",
                     easeType));
         }
-        
-}
+    }
 }

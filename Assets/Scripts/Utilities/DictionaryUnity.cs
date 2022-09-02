@@ -8,6 +8,7 @@ namespace Utilities
 
     {
         public List<KeyValuePairUnity<K, V>> dictionary;
+
         public DictionaryUnity()
         {
             dictionary = new List<KeyValuePairUnity<K, V>>();

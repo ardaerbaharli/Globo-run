@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Managers;
 using NaughtyAttributes;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,14 +30,14 @@ namespace Obstacles
         private float rightBorderX;
 
 
-        [SerializeField]public float length;
-        
+        [SerializeField] public int scoreValue;
+        [SerializeField] public float length;
         [SerializeField] protected float height;
         private List<Obstacle> _obstacles;
         protected List<Moving> MovingObstacles;
         private List<Collider> _colliders;
+
         public PooledObject pooledObject;
-        // public PooledObject plane;
         private GameObject _jumper;
 
         private void Awake()
@@ -78,7 +79,7 @@ namespace Obstacles
             foreach (var x in MovingObstacles)
                 x.ResetPosition();
 
-            
+
             // ObjectPool.Instance.TakeBack(plane);
             ObjectPool.Instance.TakeBack(pooledObject);
         }

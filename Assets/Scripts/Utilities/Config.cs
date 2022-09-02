@@ -18,6 +18,5 @@ namespace Utilities
             get => PlayerPrefsX.GetBool(SoundPref, true);
             set => PlayerPrefsX.SetBool(SoundPref, value);
         }
-
     }
 }

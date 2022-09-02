@@ -1,42 +1,37 @@
 using System;
 using System.Collections;
 using Enums;
+using Managers;
 using UnityEngine;
 
 namespace PowerUps
 {
-    public class PowerUp : MonoBehaviour
+    public class PowerUp : Collectable
     {
-        private Material _material;
-
-        public Action OnCollected;
-
-        private PowerUpType _powerUpType;
+        public PowerUpType powerUpType;
         private PowerUpEffect _effect;
-        public PooledObject pooledObject;
-        private bool didCollect;
+        private bool _didCollect;
 
+        protected override void Collect()
+        {
+            Activate(Player.Instance);
+        }
 
         private void Awake()
         {
-            _material = GetComponent<Renderer>().material;
-        }
-
-        public void SetPowerUpType(PowerUpType powerUpType)
-        {
-            _powerUpType = powerUpType;
             _effect = Resources.Load<PowerUpEffect>($"PowerUps/{powerUpType}PowerUpEffect");
-
-            if (_effect.changeMaterial) _material = _effect.tileMaterial;
-            else if (_effect.changeColor) _material.color = _effect.tileColor;
         }
+
 
         public void Activate(Player player)
         {
-            didCollect = true;
-            PowerUpSpawner.Instance.Spawn();
+            if (powerUpType == PowerUpType.Shield)
+                player._shieldPowerUp = this;
+
+            _didCollect = true;
+            CollectableSpawner.Instance.Spawn();
             print("Activate");
-            StartCoroutine($"Using{_powerUpType}", player);
+            StartCoroutine($"Using{powerUpType}", player);
         }
 
         private IEnumerator UsingSpeed(Player player)
@@ -46,7 +41,7 @@ namespace PowerUps
             var speedBoost = ((SpeedPowerUpEffect) _effect).speedBoost;
             var startSpeed = player.RunningSpeed;
             if (startSpeed + speedBoost > player.maxSpeed) speedBoost = player.maxSpeed - startSpeed;
-            
+
             while (t < _effect.duration)
             {
                 t += Time.deltaTime;
@@ -77,23 +72,38 @@ namespace PowerUps
 
         private IEnumerator UsingShield(Player player)
         {
+            player.shieldEffect.SetActive(true);
+            player.hasShield = true;
+            yield return new WaitForSeconds(_effect.duration);
+            Deactivate(player);
+        }
+
+        private IEnumerator UsingHeart(Player player)
+        {
+            GameManager.Instance.GainedLife();
             yield return new WaitForSeconds(_effect.duration);
             Deactivate(player);
         }
 
 
-        private void Deactivate(Player player)
+        public void Deactivate(Player player)
         {
-            didCollect = false;
-            // player.RunningSpeed = player.defaultRunningSpeed;
+            SoundManager.Instance.PlayPowerUpDeactivation();
+            if (powerUpType == PowerUpType.Shield)
+            {
+                player.shieldEffect.SetActive(false);
+                player.hasShield = false;
+            }
+
+            _didCollect = false;
             ObjectPool.Instance.TakeBack(pooledObject);
         }
 
-        public void Missed()
+        public override void Missed()
         {
-            if (didCollect) return;
+            if (_didCollect) return;
             print("missed");
-            PowerUpSpawner.Instance.Spawn();
+            CollectableSpawner.Instance.Spawn();
             ObjectPool.Instance.TakeBack(pooledObject);
         }
     }

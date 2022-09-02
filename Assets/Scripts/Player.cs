@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using Enums;
+using Extensions;
+using Managers;
 using Obstacles;
 using PowerUps;
 using UnityEngine;
@@ -8,6 +10,7 @@ using Utilities;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] public GameObject shieldEffect;
     [SerializeField] public float defaultRunningSpeed;
     [SerializeField] private float platformWidth;
     [SerializeField] private CameraMovements cameraMovements;
@@ -18,6 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] public float minSpeed;
 
     [NonSerialized] public float RunningSpeed;
+    [NonSerialized] public PowerUp _shieldPowerUp;
+
+    public bool hasShield;
     private float _leftBorder, _rightBorder;
     private Animator _animator;
     private float _screenWidth;
@@ -28,6 +34,8 @@ public class Player : MonoBehaviour
     private static readonly int RunningHash = Animator.StringToHash("Running");
     private static readonly int IdleHash = Animator.StringToHash("Idle");
     private static readonly int FallHash = Animator.StringToHash("Fall");
+    public static Player Instance { get; private set; }
+
 
     private void Idle() => _animator.SetTrigger(IdleHash);
     private void Running() => _animator.SetTrigger(RunningHash);
@@ -35,6 +43,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         _screenWidth = Screen.width;
         RunningSpeed = defaultRunningSpeed;
         _zDir = defaultRunningSpeed;
@@ -88,7 +97,9 @@ public class Player : MonoBehaviour
         }
         else _xDir = 0;
 
-        transform.Translate(_xDir, 0, _zDir * Time.deltaTime);
+        var zDif = _zDir * Time.deltaTime;
+        ScoreManager.instance.Score += zDif;
+        transform.Translate(_xDir, 0, zDif);
     }
 
     private IEnumerator JumpCoroutine()
@@ -120,24 +131,33 @@ public class Player : MonoBehaviour
         {
             JumpOverObstacle();
         }
-        else if (other.gameObject.CompareTag("ScoreTrigger"))
+        else if (other.gameObject.CompareTag("ObstaclePassed"))
         {
-            ScoreManager.instance.Score++;
+            LevelManager.Instance.PassedObstacles++;
         }
         else if (other.gameObject.CompareTag("Obstacle") || other.gameObject.CompareTag("Moving"))
         {
             if (cheatingMode) return;
+            if (hasShield)
+            {
+                _shieldPowerUp.Deactivate(this);
+                return;
+            }
+
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
             GameManager.Instance.LostLife();
         }
-        else if (other.gameObject.CompareTag("PowerUp"))
-        {
-            print("PowerUp trigger");
-            other.gameObject.GetComponent<PowerUp>().Activate(this);
-        }
+        // else if (other.gameObject.CompareTag("PowerUp"))
+        // {
+        //     var powerUp = other.gameObject.GetComponent<PowerUp>();
+        //     powerUp.Activate(this);
+        //     
+        //     if (powerUp.powerUpType == PowerUpType.Shield)
+        //         _shieldPowerUp = powerUp;
+        // }
         else if (other.gameObject.CompareTag("Missed"))
         {
-            other.gameObject.GetComponentInParent<PowerUp>().Missed();
+            other.gameObject.GetComponentInSibling<Collectable>().Missed();
         }
     }
 }
