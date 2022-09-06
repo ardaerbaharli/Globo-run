@@ -43,6 +43,9 @@ namespace Obstacles
 
         public override void Activate()
         {
+            if (_isActivated) return;
+            _isActivated = true;
+            
             var i = 0;
             foreach (var m in MovingObstacles)
             {

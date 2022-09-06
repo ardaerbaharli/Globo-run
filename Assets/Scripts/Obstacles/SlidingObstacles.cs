@@ -17,6 +17,9 @@ namespace Obstacles
 
         public override void Activate()
         {
+            if (_isActivated) return;
+            _isActivated = true;
+            
             foreach (var m in MovingObstacles)
             {
                 var isStartingFromLeft = Range(0, 2) == 0;

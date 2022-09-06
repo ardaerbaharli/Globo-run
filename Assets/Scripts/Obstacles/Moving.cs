@@ -2,6 +2,7 @@
 using Enums;
 using Managers;
 using UnityEngine;
+using Utilities;
 using static Utilities.iTween;
 using Random = UnityEngine.Random;
 
@@ -28,6 +29,8 @@ namespace Obstacles
 
         public void ResetPosition()
         {
+            Stop(gameObject);
+            Destroy(GetComponent<iTween>());
             transform.localPosition = _startPosition;
         }
 

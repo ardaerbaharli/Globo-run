@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Enums;
+using NaughtyAttributes;
 using UnityEngine;
 using Utilities;
 
@@ -8,6 +9,8 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+      
+
         public Action OnGameStarted, OnGameOver, OnPaused, OnResumed;
         public Action OnLifeLost, OnLifeGained;
         public static GameManager Instance;
@@ -18,6 +21,8 @@ namespace Managers
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
+            
             Instance = this;
             remainingLives = Config.TotalLives;
         }
@@ -25,10 +30,12 @@ namespace Managers
         private IEnumerator Start()
         {
             yield return new WaitUntil(() => ObjectPool.Instance.isPoolSet);
+            TimeManager.Instance.OnTimeUp += GameOver;
 
             LevelManager.Instance.Init();
         }
 
+       
 
         public void StartGame()
         {
@@ -37,7 +44,7 @@ namespace Managers
             PageController.Instance.ShowPage(Pages.Game);
         }
 
-        public void GameOver()
+        private void GameOver()
         {
             if (gameState == GameState.GameOver) return;
             Vibration.Heavy();

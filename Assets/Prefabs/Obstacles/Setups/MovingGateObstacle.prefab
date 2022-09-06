@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 989156335276851380}
   - component: {fileID: 4673998947095030145}
+  - component: {fileID: -3090368182958972274}
   m_Layer: 0
   m_Name: MovingGateObstacle
   m_TagString: Untagged
@@ -47,7 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5a81526a834c66bc50984aef1be9d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startOnAwake: 1
   hasJumper: 0
+  hasJumpers: 0
   randomizeJumper: 0
   betweenValues: 0
   xValues: []
@@ -56,7 +59,9 @@ MonoBehaviour:
   rightBorderX: 0
   scoreValue: 0
   length: 1
-  height: 0
+  height: 1
+  _obstacles: []
+  MovingObstacles: []
   pooledObject:
     name: 
     gameObject: {fileID: 0}
@@ -74,6 +79,19 @@ MonoBehaviour:
   moveDistance: 0
   minMoveDistance: 4
   maxMoveDistance: 8
+--- !u!114 &-3090368182958972274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989156335276851381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2662db2fda4e4abfa44e3d45fef91d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faded: 0
 --- !u!1 &7876942823530446159
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +371,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 989156335276851380}
     m_Modifications:
+    - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
+      propertyPath: easeType
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: loopType
       value: 2

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1600948496107138488}
   - component: {fileID: -913415095868465630}
+  - component: {fileID: -6953763889007700210}
   m_Layer: 0
   m_Name: OpenGateObstacle
   m_TagString: Untagged
@@ -46,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbcda207a64467498786cb93bb64d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startOnAwake: 1
   hasJumper: 0
+  hasJumpers: 0
   randomizeJumper: 0
   betweenValues: 0
   xValues: []
@@ -56,11 +59,26 @@ MonoBehaviour:
   scoreValue: 0
   length: 1
   height: 1
+  _obstacles: []
+  MovingObstacles: []
   pooledObject:
     name: 
     gameObject: {fileID: 0}
     transform: {fileID: 0}
     poolName: 
+--- !u!114 &-6953763889007700210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600948496107138489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2662db2fda4e4abfa44e3d45fef91d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faded: 0
 --- !u!1 &4470668641534838074
 GameObject:
   m_ObjectHideFlags: 0

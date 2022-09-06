@@ -10,7 +10,6 @@ using Utilities;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public GameObject shieldEffect;
     [SerializeField] public float defaultRunningSpeed;
     [SerializeField] private float platformWidth;
     [SerializeField] private CameraMovements cameraMovements;
@@ -35,6 +34,8 @@ public class Player : MonoBehaviour
     private static readonly int IdleHash = Animator.StringToHash("Idle");
     private static readonly int FallHash = Animator.StringToHash("Fall");
     public static Player Instance { get; private set; }
+    public PowerUps.PowerUps PowerUps;
+    private static readonly int Stumble = Animator.StringToHash("Stumble");
 
 
     private void Idle() => _animator.SetTrigger(IdleHash);
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         _zDir = defaultRunningSpeed;
         _leftBorder = -platformWidth / 2;
         _rightBorder = platformWidth / 2;
+        PowerUps = GetComponentInChildren<PowerUps.PowerUps>();
     }
 
     private void Start()
@@ -145,16 +147,9 @@ public class Player : MonoBehaviour
             }
 
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
+            _animator.SetTrigger(Stumble);
             GameManager.Instance.LostLife();
         }
-        // else if (other.gameObject.CompareTag("PowerUp"))
-        // {
-        //     var powerUp = other.gameObject.GetComponent<PowerUp>();
-        //     powerUp.Activate(this);
-        //     
-        //     if (powerUp.powerUpType == PowerUpType.Shield)
-        //         _shieldPowerUp = powerUp;
-        // }
         else if (other.gameObject.CompareTag("Missed"))
         {
             other.gameObject.GetComponentInSibling<Collectable>().Missed();

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9049553280905209483}
   - component: {fileID: 364412804847549984}
+  - component: {fileID: 7932039614132313257}
   m_Layer: 0
   m_Name: TwoPieceElevatorObstacle
   m_TagString: Untagged
@@ -51,7 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912a9218d2384f5295600373d2d9017a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startOnAwake: 1
   hasJumper: 1
+  hasJumpers: 0
   randomizeJumper: 1
   betweenValues: 1
   xValues:
@@ -63,6 +66,8 @@ MonoBehaviour:
   scoreValue: 0
   length: 4.5
   height: 0
+  _obstacles: []
+  MovingObstacles: []
   pooledObject:
     name: 
     gameObject: {fileID: 0}
@@ -80,6 +85,19 @@ MonoBehaviour:
   moveDistance: 0
   minMoveDistance: 5
   maxMoveDistance: 7.5
+--- !u!114 &7932039614132313257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8565811705114356189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2662db2fda4e4abfa44e3d45fef91d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faded: 0
 --- !u!1001 &485582232581983825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,6 +105,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9049553280905209483}
     m_Modifications:
+    - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
+      propertyPath: easeType
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: loopType
       value: 2
@@ -555,6 +577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9049553280905209483}
     m_Modifications:
+    - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
+      propertyPath: easeType
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 504372389386656692, guid: 6570801a0921a4c9996c8385fef61a7f, type: 3}
       propertyPath: loopType
       value: 2

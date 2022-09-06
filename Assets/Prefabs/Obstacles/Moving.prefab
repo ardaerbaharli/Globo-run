@@ -110,9 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c01fe2a24a419bb1412cd2a9553126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 650
-  interval: 2
-  direction: 0
   moveAxis: 0
   easeType: 0
   loopType: 0

@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bbcda207a64467498786cb93bb64d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startOnAwake: 1
   hasJumper: 1
+  hasJumpers: 0
   randomizeJumper: 1
   betweenValues: 0
   xValues: []

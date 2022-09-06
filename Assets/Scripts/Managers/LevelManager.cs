@@ -76,17 +76,26 @@ namespace Managers
             _currentObstacle.Activate();
             _obstacles[passedObstacles + 2].gameObject.SetActive(true);
 
+            SetObstaclesActive();
             if (_prePreviousObstacle is not null)
                 _prePreviousObstacle.TakeBackToPool();
 
             SpawnObstacle();
         }
 
-        public void SetObstaclesActive()
+        private void SetObstaclesActive()
         {
-            _obstacles[passedObstacles].gameObject.SetActive(true);
-            _obstacles[passedObstacles + 1].gameObject.SetActive(true);
-            _obstacles[passedObstacles + 2].gameObject.SetActive(true);
+            // _obstacles[passedObstacles].gameObject.SetActive(true);
+            // _obstacles[passedObstacles + 1].gameObject.SetActive(true);
+            // _obstacles[passedObstacles + 2].gameObject.SetActive(true);
+
+            for (var i = passedObstacles; i < passedObstacles + 2; i++)
+            {
+                var obstacle = _obstacles[i];
+                obstacle.gameObject.SetActive(true);
+                if (obstacle.startOnAwake || i == passedObstacles)
+                    obstacle.Activate();
+            }
         }
 
 

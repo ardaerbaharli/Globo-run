@@ -32,11 +32,13 @@ namespace PowerUps
             CollectableSpawner.Instance.Spawn();
             print("Activate");
             StartCoroutine($"Using{powerUpType}", player);
+            player.PowerUps.Activate(powerUpType);
         }
 
         private IEnumerator UsingSpeed(Player player)
         {
             print("using speed");
+
             var t = 0.0f;
             var speedBoost = ((SpeedPowerUpEffect) _effect).speedBoost;
             var startSpeed = player.RunningSpeed;
@@ -72,7 +74,6 @@ namespace PowerUps
 
         private IEnumerator UsingShield(Player player)
         {
-            player.shieldEffect.SetActive(true);
             player.hasShield = true;
             yield return new WaitForSeconds(_effect.duration);
             Deactivate(player);
@@ -89,11 +90,9 @@ namespace PowerUps
         public void Deactivate(Player player)
         {
             SoundManager.Instance.PlayPowerUpDeactivation();
+            player.PowerUps.Deactivate(powerUpType);
             if (powerUpType == PowerUpType.Shield)
-            {
-                player.shieldEffect.SetActive(false);
                 player.hasShield = false;
-            }
 
             _didCollect = false;
             ObjectPool.Instance.TakeBack(pooledObject);
