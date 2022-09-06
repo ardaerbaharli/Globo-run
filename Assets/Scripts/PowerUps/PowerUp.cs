@@ -89,7 +89,6 @@ namespace PowerUps
 
         public void Deactivate(Player player)
         {
-            SoundManager.Instance.PlayPowerUpDeactivation();
             player.PowerUps.Deactivate(powerUpType);
             if (powerUpType == PowerUpType.Shield)
                 player.hasShield = false;

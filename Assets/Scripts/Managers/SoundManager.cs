@@ -8,6 +8,10 @@ namespace Managers
     {
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private AudioSource uiClick;
+        [SerializeField] private AudioSource coinCollect;
+        [SerializeField] private AudioSource powerUpCollect;
+        [SerializeField] private AudioSource jump;
+        [SerializeField] private AudioSource step;
 
         public static SoundManager Instance;
 
@@ -26,7 +30,6 @@ namespace Managers
 
         private void Start()
         {
-            return;
             SetSound(PlayerPrefsX.GetBool("Sound", true));
         }
 
@@ -45,8 +48,24 @@ namespace Managers
         }
 
 
-        public void PlayPowerUpDeactivation()
+        public void PlayCoinCollect()
         {
+            coinCollect.Play();
+        }
+        
+        public void PlayPowerUpCollect()
+        {
+            powerUpCollect.Play();
+        }
+        
+        public void PlayJump()
+        {
+            jump.Play();
+        }
+        
+        public void PlayStep()
+        {
+            step.Play();
         }
     }
 }

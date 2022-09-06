@@ -99,9 +99,11 @@ public class Player : MonoBehaviour
         }
         else _xDir = 0;
 
+        // _animator.speed = RunningSpeed / defaultRunningSpeed;
         var zDif = _zDir * Time.deltaTime;
         ScoreManager.instance.Score += zDif;
         transform.Translate(_xDir, 0, zDif);
+        
     }
 
     private IEnumerator JumpCoroutine()
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
 
+        SoundManager.Instance.PlayJump();
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -154,5 +157,10 @@ public class Player : MonoBehaviour
         {
             other.gameObject.GetComponentInSibling<Collectable>().Missed();
         }
+    }
+
+    public void Step()
+    {
+        SoundManager.Instance.PlayStep();
     }
 }
