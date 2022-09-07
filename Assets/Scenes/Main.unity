@@ -1146,7 +1146,7 @@ MonoBehaviour:
   cmvm: {fileID: 1254351696}
   shakeDuration: 0.5
   amplitudeGain: 3
-  frequencyGain: 4
+  frequencyGain: 2
   NORMAL_FOV: 70
   minFov: 50
   maxFov: 90

@@ -158,7 +158,10 @@ public class Player : MonoBehaviour
             SoundManager.Instance.Play(SoundType.HitWall);
             var isGameOver = GameManager.Instance.LostLife();
             if (!isGameOver)
+            {
+                RunningSpeed = Mathf.Clamp(RunningSpeed - 3f, minSpeed, maxSpeed);   
                 _animator.SetTrigger(Stumble);
+            }
         }
         else if (other.gameObject.CompareTag("Missed"))
         {
