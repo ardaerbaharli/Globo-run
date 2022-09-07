@@ -1,4 +1,5 @@
 using System;
+using Enums;
 using Managers;
 using UnityEngine;
 
@@ -28,7 +29,6 @@ public abstract class Collectable : MonoBehaviour
         {
             _renderer.enabled = false;
             _light.enabled = false;
-            SoundManager.Instance.PlayPowerUpCollect();
             Collect();
         }
     }

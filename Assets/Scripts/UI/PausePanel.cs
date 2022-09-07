@@ -1,3 +1,4 @@
+using Enums;
 using Managers;
 using UnityEngine;
 using Utilities;
@@ -34,20 +35,20 @@ namespace UI
 
         public void ResumeGame()
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             GameManager.Instance.ResumeGame();
         }
 
 
         private void OnSoundToggleValueChanged(bool value)
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             Config.IsSoundOn = value;
         }
 
         private void OnVibrationToggleValueChanged(bool value)
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             Config.IsVibrationOn = value;
         }
     }

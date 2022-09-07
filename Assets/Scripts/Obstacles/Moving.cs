@@ -17,6 +17,8 @@ namespace Obstacles
         [SerializeField] private EaseType easeType;
         [SerializeField] private LoopType loopType;
 
+        [NonReorderable] public bool isDropping;
+
         private float _moveDistance;
         private string _moveAxis;
 
@@ -55,6 +57,8 @@ namespace Obstacles
             MoveBy(gameObject,
                 Hash(_moveAxis, _moveDistance, "easeType", easeType, "loopType", loopType, "time",
                     Interval));
+            if (isDropping)
+                SoundManager.Instance.Play(SoundType.DropBrick);
         }
 
         private void Awake()

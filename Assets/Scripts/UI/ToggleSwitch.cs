@@ -1,4 +1,6 @@
 using System.Collections;
+using Enums;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -33,9 +35,7 @@ namespace UI
         [SerializeField] private Sprite onImage;
         [SerializeField] private Sprite offImage;
 
-
         public bool isOn;
-
 
         public void Toggle(bool value)
         {
@@ -47,6 +47,7 @@ namespace UI
 
         public void Toggle()
         {
+            SoundManager.Instance.Play(SoundType.UI);
             Toggle(!isOn);
         }
 

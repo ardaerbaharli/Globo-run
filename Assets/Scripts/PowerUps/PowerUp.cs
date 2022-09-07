@@ -14,6 +14,7 @@ namespace PowerUps
 
         protected override void Collect()
         {
+            SoundManager.Instance.Play(SoundType.CollectPowerUp);
             Activate(Player.Instance);
         }
 

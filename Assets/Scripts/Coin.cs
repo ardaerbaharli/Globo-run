@@ -1,3 +1,4 @@
+using Enums;
 using Managers;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class Coin : Collectable
 
     protected override void Collect()
     {
+        SoundManager.Instance.Play(SoundType.CollectCoin);
         _didCollect = true;
         CollectableSpawner.Instance.Spawn();
         print("Activate");

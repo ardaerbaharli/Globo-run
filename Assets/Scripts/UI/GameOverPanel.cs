@@ -1,4 +1,5 @@
 using System.Collections;
+using Enums;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -50,19 +51,19 @@ namespace UI
 
         public void RestartButton()
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         private void OnSoundToggleValueChanged(bool value)
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             Config.IsSoundOn = value;
         }
 
         private void OnVibrationToggleValueChanged(bool value)
         {
-            SoundManager.Instance.PlayUiClick();
+            SoundManager.Instance.Play(SoundType.UI);
             Config.IsVibrationOn = value;
         }
     }

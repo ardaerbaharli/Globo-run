@@ -1,3 +1,4 @@
+using Enums;
 using Managers;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace UI
     {
         public void StartGame()
         {
+            SoundManager.Instance.Play(SoundType.UI);
             GameManager.Instance.StartGame();
         }
     }

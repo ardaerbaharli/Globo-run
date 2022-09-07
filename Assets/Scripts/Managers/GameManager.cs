@@ -9,8 +9,6 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-      
-
         public Action OnGameStarted, OnGameOver, OnPaused, OnResumed;
         public Action OnLifeLost, OnLifeGained;
         public static GameManager Instance;
@@ -22,7 +20,7 @@ namespace Managers
         private void Awake()
         {
             Application.targetFrameRate = 60;
-            
+
             Instance = this;
             remainingLives = Config.TotalLives;
         }
@@ -35,7 +33,6 @@ namespace Managers
             LevelManager.Instance.Init();
         }
 
-       
 
         public void StartGame()
         {
@@ -70,13 +67,18 @@ namespace Managers
             OnResumed?.Invoke();
         }
 
-        public void LostLife()
+        public bool LostLife()
         {
             Vibration.Medium();
             remainingLives--;
-            if (remainingLives <= 0)
-                GameOver();
             OnLifeLost?.Invoke();
+            if (remainingLives <= 0)
+            {
+                GameOver();
+                return true;
+            }
+
+            return false;
         }
 
         public void GainedLife()

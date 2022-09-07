@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
 
     private void Idle() => _animator.SetTrigger(IdleHash);
     private void Running() => _animator.SetTrigger(RunningHash);
+
     private void Fall() => _animator.SetTrigger(FallHash);
 
     private void Awake()
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.OnGameStarted += Running;
         GameManager.Instance.OnPaused += Idle;
         GameManager.Instance.OnResumed += Running;
-        GameManager.Instance.OnGameOver += Idle;
+        GameManager.Instance.OnGameOver += Fall;
     }
 
     private void Update()
@@ -99,15 +100,18 @@ public class Player : MonoBehaviour
         }
         else _xDir = 0;
 
-        // _animator.speed = RunningSpeed / defaultRunningSpeed;
+        _animator.speed = RunningSpeed / defaultRunningSpeed;
+        CameraMovements.Instance.ChangeFOV(RunningSpeed / defaultRunningSpeed);
         var zDif = _zDir * Time.deltaTime;
         ScoreManager.instance.Score += zDif;
         transform.Translate(_xDir, 0, zDif);
-        
     }
+
+    private bool isJumping;
 
     private IEnumerator JumpCoroutine()
     {
+        isJumping = true;
         var journeyTime = 0.6f;
         var startPos = transform.position;
         // Jump to the jump height and then back down to the ground
@@ -121,7 +125,8 @@ public class Player : MonoBehaviour
             yield return null;
         }
 
-        SoundManager.Instance.PlayJump();
+        isJumping = false;
+        SoundManager.Instance.Play(SoundType.Jump);
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -150,8 +155,10 @@ public class Player : MonoBehaviour
             }
 
             other.gameObject.GetComponentInParent<ObstacleSetup>().DeactivateColliders();
-            _animator.SetTrigger(Stumble);
-            GameManager.Instance.LostLife();
+            SoundManager.Instance.Play(SoundType.HitWall);
+            var isGameOver = GameManager.Instance.LostLife();
+            if (!isGameOver)
+                _animator.SetTrigger(Stumble);
         }
         else if (other.gameObject.CompareTag("Missed"))
         {
@@ -161,6 +168,7 @@ public class Player : MonoBehaviour
 
     public void Step()
     {
-        SoundManager.Instance.PlayStep();
+        if (!isJumping)
+            SoundManager.Instance.Play(SoundType.Step);
     }
 }

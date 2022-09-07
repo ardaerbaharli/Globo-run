@@ -46,6 +46,7 @@ namespace Obstacles
 
                 m.gameObject.SetActive(true);
                 m.Activate();
+                
                 yield return new WaitForSeconds(interval);
             }
         }

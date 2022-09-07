@@ -1,3 +1,4 @@
+using Enums;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -40,6 +41,7 @@ namespace UI
 
         public void Pause()
         {
+            SoundManager.Instance.Play(SoundType.UI);
             GameManager.Instance.PauseGame();
         }
     }
